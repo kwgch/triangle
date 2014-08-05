@@ -26,5 +26,5 @@ class Triangle
 end
 
 if caller.empty?
-  p Triangle.new(ARGV[0].split(',')).msg
+  p Triangle.new(if (not ARGV.nil?) && (ARGV[0].is_a? String) then ARGV[0].split(',').map{|a|a.to_i} else ARGV end).msg
 end
