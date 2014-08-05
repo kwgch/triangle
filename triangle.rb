@@ -1,21 +1,30 @@
 class Triangle
-  def initialize(side1,side2,side3)
-    side1, side2, side3 = side1.to_i, side2.to_i, side3.to_i
+  
+  NON = '三角形じゃないです＞＜'
+  REGULAR = '正三角形ですね！'
+  SCALENE = '不等辺三角ですね！'
+  ISOSCELES = '二等辺三角形ですね！'
+  
+  def initialize(sides)
     @msg = ''
+    if (not sides.is_a? Array) || (not sides.length == 3 && sides.all? {|s| s.kind_of?(Numeric) })
+      @msg = NON
+      return
+    end
+    side1, side2, side3 = sides[0], sides[1], sides[2]
     if side1 + side2 <= side3 || side1 + side3 <= side2 || side2 + side3 <= side1
-      @msg = '三角形じゃないです＞＜'
+      @msg = NON
     elsif side1 == side2 && side2 == side3 && side3 == side1
-      @msg = '正三角形ですね！'
+      @msg = REGULAR
     elsif side1 != side2 && side2 != side3 && side3 != side1
-      @msg = '不等辺三角ですね！'
+      @msg = SCALENE
     elsif side1 == side2 || side2 == side3 || side3 == side1
-      @msg = '二等辺三角形ですね！'
+      @msg = ISOSCELES
     end
   end
   attr_accessor :msg
 end
 
 if caller.empty?
-  args = ARGV[0].split(',')
-  p Triangle.new(args[0],args[1],args[2]).msg
+  p Triangle.new(ARGV[0].split(',')).msg
 end
